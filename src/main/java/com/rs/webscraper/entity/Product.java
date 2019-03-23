@@ -24,8 +24,20 @@ public class Product {
 	@Column(name="manufacturer")
 	private String manufacturer;
 	
-	@Column(name="price")
-	private double price;
+	@Column(name="sale_price")
+	private double salePrice;
+	
+	@Column(name="category")
+	private String category;
+	
+	@Column(name="list_price")
+	private Double listPrice;
+	
+	@Column(name="product_url")
+	private String productUrl;
+	
+	@Column(name="image_url")
+	private String imageUrl;
 
 	//Constructors for products
 	
@@ -33,13 +45,21 @@ public class Product {
 		
 	}
 	
-	public Product(int id, String title, String manufacturer, double price) {
+
+
+	public Product(String title, String manufacturer, double salePrice, String category, Double listPrice,
+			String productUrl, String imageUrl) {
 		super();
-		this.id = id;
 		this.title = title;
 		this.manufacturer = manufacturer;
-		this.price = price;
+		this.salePrice = salePrice;
+		this.category = category;
+		this.listPrice = listPrice;
+		this.productUrl = productUrl;
+		this.imageUrl = imageUrl;
 	}
+
+
 
 	//Getters and setters for products
 	
@@ -67,12 +87,60 @@ public class Product {
 		this.manufacturer = manufacturer;
 	}
 
-	public double getPrice() {
-		return price;
+	public double getSalePrice() {
+		return salePrice;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
+	public void setSalePrice(double salePrice) {
+		this.salePrice = salePrice;
+	}
+
+
+
+	public String getCategory() {
+		return category;
+	}
+
+
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+
+
+	public Double getListPrice() {
+		return listPrice;
+	}
+
+
+
+	public void setListPrice(Double listPrice) {
+		this.listPrice = listPrice;
+	}
+
+
+
+	public String getProductUrl() {
+		return productUrl;
+	}
+
+
+
+	public void setProductUrl(String productUrl) {
+		this.productUrl = productUrl;
+	}
+
+
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 	
 	

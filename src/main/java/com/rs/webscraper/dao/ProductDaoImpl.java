@@ -34,6 +34,29 @@ public class ProductDaoImpl implements ProductDao{
 		return theProducts;
 	}
 
+	@Override
+	public void saveProduct(Product newProduct) {
+		
+		//get current hibernate session
+		Session session = entityManager.unwrap(Session.class);
+		
+		System.out.println("ProductDao------------Saving product to DB");
+		//save or update product to the db
+		session.saveOrUpdate(newProduct);
+		
+	}
+
+	@Override
+	public Product getProduct(int id) {
+		
+		//get current hibernate session
+		Session session = entityManager.unwrap(Session.class);
+		
+		//get product from session and return it
+		return session.get(Product.class, id);
+
+	}
+
 	
 	
 }

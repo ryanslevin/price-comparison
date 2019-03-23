@@ -10,24 +10,15 @@
 <body>
 <div class="container">
 <br><br>
-<h1>Product List</h1>
+<h1 th:text=${theProduct.title}></h1>
+<h2 th:text=${theProduct.manufacturer}></h2>
 <br><br>
-
-<p>Add a new product!</p>
-
-
-<!-- Form for inputitng Wiggle.co.uk URL to scrape new product data -->
-<form action ="#" th:action="@{/list}"  method="post">
-<input type="text" th:value="*{newProductUrl}" name="newProductUrl"/>
-<input type="submit" />
-</form>
-
-
-<!-- Iterate through model to populate table with list of products -->
+<a th:href=@{/list}>Back to Product List</a>
 <br><br>
 <div class="jumbotron">
 	<table class="table">
 	<thead>
+		<th scope="col">Picture</th>
 		<th scope="col">Title</th>
 		<th scope="col">Category</th>
 		<th scope="col">Manufacturer</th>
@@ -35,12 +26,14 @@
 		<th scope="col">List Price</th>
 	</thead>
 	<tbody>
-	<tr th:each="product : ${theProducts}">
-		<td><a th:href=@{/list/}+${product.id}><p th:text=${product.title}></p></a></td>
-		<td th:text=${product.category}></td>		
-		<td th:text=${product.manufacturer}></td>	
-		<td th:text=${product.salePrice}></td>
-		<td th:text=${product.listPrice}></td>
+	<tr>
+		<td><img th:src=${theProduct.imageUrl}></img></td>
+		<td th:text=${theProduct.title}></td>
+		<td th:text=${theProduct.category}></td>		
+		<td th:text=${theProduct.manufacturer}></td>	
+		<td th:text=${theProduct.salePrice}></td>
+		<td th:text=${theProduct.listPrice}></td>
+		<td><a th:href=${theProduct.productUrl}>Click Here to Buy</a></td>
 	</tr>
 	</tbody>	
 	</table>

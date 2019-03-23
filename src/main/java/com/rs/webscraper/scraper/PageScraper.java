@@ -1,11 +1,12 @@
 package com.rs.webscraper.scraper;
 
-import java.util.List;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
+import org.springframework.stereotype.Component;
 
+import com.rs.webscraper.entity.Product;
+
+@Component
 public class PageScraper {
 	
 	
@@ -18,17 +19,20 @@ public class PageScraper {
 	
 	
 	
-	public static void scrape(String url) {
-		
+	public static Product scrape(String url) {
+				
 		try {
 		Document doc = Jsoup.connect(url).get();
 		
-		//get elements 
+		//get elements properties
 		String title = doc.getElementById("productTitle").text();
 		String salePriceText = doc.getElementsByClass("js-unit-price").text();
 		String listPriceText = doc.getElementsByClass("js-list-price").text();
-		List<Element> listOfSKUSelectors = doc.getElementsByClass("bem-sku-selector__internal");
-		String manufacturer = doc.getElementsByAttributeValue("data-ga-brand", "Brand").text();
+		String manufacturer = doc.getElementsByAttributeValue("data-ga-action", "Brand").attr("data-ga-label");
+		String category = doc.getElementsByAttributeValue("data-ga-action", "Category").attr("data-ga-label");
+		String productUrl = doc.location();
+		String imageUrl = "http:"+doc.getElementById("pdpGalleryImage").attr("src");
+		
 		
 		//remove nondigits from string, leaves decimal in place
 		salePriceText = salePriceText.replaceAll("[a-z A-Z $ ,]", "");
@@ -39,18 +43,25 @@ public class PageScraper {
 		Double listPrice = Double.parseDouble(listPriceText);
 
 		
+		//create and return new product object
+		
+		return new Product(title, manufacturer, salePrice, category, listPrice, productUrl, imageUrl);
+		
+		/*
 		
 		System.out.println("title: "+title);
 		System.out.println("salePrice: "+salePrice);
 		System.out.println("listPrice: "+listPrice);
 		System.out.println("manufacturer: "+manufacturer);
+		System.out.println("category: "+category);
+		System.out.println("productUrl: "+productUrl);
+		System.out.println("imgUrl: "+imageUrl);
 		
-		for (Element element : listOfSKUSelectors) {
-			System.out.println(element.elementSiblingIndex());
-		}
+		*/
 		
 		}catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
 		
 		
