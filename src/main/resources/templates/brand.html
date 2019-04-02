@@ -22,7 +22,7 @@
 <h1>Product List</h1>
 <br><br>
 
-<p>Add a new product!</p>
+<a th:href=@{/list}>Back to Product List</a>
 
 <!-- Iterate through model to populate table with list of products -->
 <br><br>
@@ -32,12 +32,16 @@
 		<th scope="col">Title</th>
 		<th scope="col">Category</th>
 		<th scope="col">Brand</th>
+		<th scope="col">Sale Price</th>
+		<th scope="col">List Price</th>
 	</thead>
 	<tbody>
 	<tr th:each="product : ${theProducts}">
-		<td><a th:href=@{/list/}+${product.id}><p th:text=${product.name}></p></a></td>
+		<td><a th:href=@{/list/}+${product.id}><p th:text=${product.title}></p></a></td>
 		<td th:text=${product.category}></td>
 		<td><a th:href=@{/brand/}+${product.brand}><p th:text=${product.brand}></p></a></td>	
+		<td th:text=${product.salePrice}></td>
+		<td th:text=${product.listPrice}></td>
 	</tr>
 	</tbody>	
 	</table>

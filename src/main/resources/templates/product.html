@@ -10,34 +10,46 @@
 <body>
 <div class="container">
 <br><br>
-<h1 th:text=${theProduct.title}></h1>
-<h2 th:text=${theProduct.manufacturer}></h2>
+<h1 th:text=${theProduct.name}></h1>
+<h2 th:text=${theProduct.brand}></h2>
 <br><br>
 <a th:href=@{/list}>Back to Product List</a>
 <br><br>
 <div class="jumbotron">
 	<table class="table">
 	<thead>
-		<th scope="col">Picture</th>
 		<th scope="col">Title</th>
 		<th scope="col">Category</th>
 		<th scope="col">Manufacturer</th>
-		<th scope="col">Sale Price</th>
-		<th scope="col">List Price</th>
 	</thead>
 	<tbody>
 	<tr>
-		<td><img th:src=${theProduct.imageUrl}></img></td>
-		<td th:text=${theProduct.title}></td>
+		<td th:text=${theProduct.name}></td>
 		<td th:text=${theProduct.category}></td>		
-		<td th:text=${theProduct.manufacturer}></td>	
-		<td th:text=${theProduct.salePrice}></td>
-		<td th:text=${theProduct.listPrice}></td>
-		<td><a th:href=${theProduct.productUrl}>Click Here to Buy</a></td>
+		<td th:text=${theProduct.brand}></td>	
 	</tr>
 	</tbody>	
 	</table>
 </div>
+<div class="jumbotron">
+	<table class="table">
+	<thead>
+		<th scope="col">Website</th>
+		<th scope="col">Date</th>
+		<th scope="col">Sale Price</th>
+		<th scope="col">Unit Price</th>		
+	</thead>
+	<tbody>
+	<tr th:each="priceHistory : ${thePriceHistory}">
+		<td th:text=${priceHistory.websiteId.name}></td>	
+		<td th:text=${priceHistory.dateTimeScraped}></td>	
+		<td th:text=${priceHistory.salePrice}></td>
+		<td th:text=${priceHistory.unitPrice}></td>
+	</tr>
+	</tbody>	
+	</table>
+</div>
+
 </div>
 </body>
 </html>

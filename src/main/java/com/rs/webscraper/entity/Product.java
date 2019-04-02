@@ -16,25 +16,28 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private Integer id;
 	
-	@Column(name="title")
-	private String title;
+	@Column(name="name")
+	private String name;
 	
-	@Column(name="manufacturer")
-	private String manufacturer;
-	
-	@Column(name="sale_price")
-	private double salePrice;
-	
+	@Column(name="brand")
+	private String brand;
+
 	@Column(name="category")
 	private String category;
 	
-	@Column(name="list_price")
-	private Double listPrice;
+	@Column(name="sub_category")
+	private String subCategory;
 	
-	@Column(name="product_url")
-	private String productUrl;
+	@Column(name="wiggle_com_url")
+	private String wiggleComUrl;
+
+	@Column(name="chain_reaction_cycles_com_url")
+	private String chainReactionCyclesComUrl;
+	
+	@Column(name="amazon_com_url")
+	private String amazonComUrl;
 	
 	@Column(name="image_url")
 	private String imageUrl;
@@ -44,105 +47,100 @@ public class Product {
 	public Product() {
 		
 	}
-	
 
-
-	public Product(String title, String manufacturer, double salePrice, String category, Double listPrice,
-			String productUrl, String imageUrl) {
+	public Product(String name, String brand, String category, String subCategory, String wiggleComUrl,
+			String chainReactionCyclesComUrl, String amazonComUrl, String imageUrl) {
 		super();
-		this.title = title;
-		this.manufacturer = manufacturer;
-		this.salePrice = salePrice;
+		this.name = name;
+		this.brand = brand;
 		this.category = category;
-		this.listPrice = listPrice;
-		this.productUrl = productUrl;
+		this.subCategory = subCategory;
+		this.wiggleComUrl = wiggleComUrl;
+		this.chainReactionCyclesComUrl = chainReactionCyclesComUrl;
+		this.amazonComUrl = amazonComUrl;
 		this.imageUrl = imageUrl;
 	}
 
-
-
-	//Getters and setters for products
-	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getManufacturer() {
-		return manufacturer;
+	public String getBrand() {
+		return brand;
 	}
 
-	public void setManufacturer(String manufacturer) {
-		this.manufacturer = manufacturer;
+	public void setBrand(String brand) {
+		this.brand = brand;
 	}
-
-	public double getSalePrice() {
-		return salePrice;
-	}
-
-	public void setSalePrice(double salePrice) {
-		this.salePrice = salePrice;
-	}
-
-
 
 	public String getCategory() {
 		return category;
 	}
 
-
-
 	public void setCategory(String category) {
 		this.category = category;
 	}
 
-
-
-	public Double getListPrice() {
-		return listPrice;
+	public String getSubCategory() {
+		return subCategory;
 	}
 
-
-
-	public void setListPrice(Double listPrice) {
-		this.listPrice = listPrice;
+	public void setSubCategory(String subCategory) {
+		this.subCategory = subCategory;
 	}
 
-
-
-	public String getProductUrl() {
-		return productUrl;
+	public String getWiggleComUrl() {
+		return wiggleComUrl;
 	}
 
-
-
-	public void setProductUrl(String productUrl) {
-		this.productUrl = productUrl;
+	public void setWiggleComUrl(String wiggleComUrl) {
+		this.wiggleComUrl = wiggleComUrl;
 	}
 
+	public String getChainReactionCyclesComUrl() {
+		return chainReactionCyclesComUrl;
+	}
 
+	public void setChainReactionCyclesComUrl(String chainReactionCyclesComUrl) {
+		this.chainReactionCyclesComUrl = chainReactionCyclesComUrl;
+	}
+
+	public String getAmazonComUrl() {
+		return amazonComUrl;
+	}
+
+	public void setAmazonComUrl(String amazonComUrl) {
+		this.amazonComUrl = amazonComUrl;
+	}
 
 	public String getImageUrl() {
 		return imageUrl;
 	}
 
-
-
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", brand=" + brand + ", category=" + category + ", subCategory="
+				+ subCategory + ", wiggleComUrl=" + wiggleComUrl + ", chainReactionCyclesComUrl="
+				+ chainReactionCyclesComUrl + ", amazonComUrl=" + amazonComUrl + ", imageUrl=" + imageUrl + "]";
+	}
 	
 
+	
+	
 }
