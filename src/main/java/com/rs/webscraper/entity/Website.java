@@ -33,9 +33,6 @@ public class Website {
 		this.url = url;
 	}
 	
-	
-	
-
 	public int getID() {
 		return ID;
 	}
@@ -64,10 +61,5 @@ public class Website {
 	public String toString() {
 		return "Website [ID=" + ID + ", name=" + name + ", url=" + url + "]";
 	}
-	
-	
-	
-	
-	
 	
 }

@@ -21,8 +21,6 @@ public interface ProductDao {
 
 	public List<Product> getSubCategoryProducts(String subCategory);
 
-	public PriceHistory getLatestWigglePrice(int productId);
-
-	public PriceHistory getLatestCrcPrice(int productId);
+	public List<PriceHistory> getCurrentPrices(int productId);
 
 }

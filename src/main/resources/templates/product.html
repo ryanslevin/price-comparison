@@ -32,32 +32,24 @@
 				<img th:src=${theProduct.imageUrl} class="img-fluid"></img>
 				
 				</div>
-				
 				<div class="col">
-				
-				<!-- add latest pricing info here -->
+	
+				<!-- add current pricing info here -->
+				</div>
 				<div class="jumbotron">
 					<table class="table">
 						<thead>
 							<th scope="col">Website</th>
 							<th scope="col">Sale Price</th>
-							<th scope="col">Link</th>
 						</thead>
 						<tbody>
-							<tr>
-								<td th:text=${latestWigglePrice.websiteId.name}></td>
-								<td th:text=${latestWigglePrice.salePrice}></td>
-								<td><a th:href=${latestWigglePrice.productId.wiggleComUrl}>Buy Now!</a></td>
+							<tr th:each="currentPrice, iStat : ${currentPrices}"
+								 th:style="${iStat.first}? 'font-weight: bold; color: red;'">
+								<td th:text=${currentPrice.websiteId.name}></td>
+								<td th:text=${currentPrice.salePrice}></td>
 							</tr>
-							<tr>
-								<td th:text=${latestCrcPrice.websiteId.name}></td>
-								<td th:text=${latestCrcPrice.salePrice}></td>
-								<td><a th:href=${latestCrcPrice.productId.chainReactionCyclesComUrl}>Buy Now!</a></td>
-							</tr>							
 						</tbody>
 					</table>
-
-				</div>
 				</div>
 				</div>
 				<div class="jumbotron">
@@ -81,6 +73,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
 </body>
 </html>

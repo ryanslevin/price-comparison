@@ -59,14 +59,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public PriceHistory getLatestWigglePrice(int productId) {
-		return productDao.getLatestWigglePrice(productId);
-	}
+	public List<PriceHistory> getCurrentPrices(int productId) {
 
-	@Override
-	public PriceHistory getLatestCrcPrice(int productId) {
-		
-		return productDao.getLatestCrcPrice(productId);
+		return productDao.getCurrentPrices(productId);
 	}
 	
 	

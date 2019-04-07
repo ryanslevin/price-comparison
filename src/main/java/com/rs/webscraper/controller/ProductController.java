@@ -23,7 +23,7 @@ public class ProductController {
 	ScraperController scraperController;
 	
 	@GetMapping("/list")
-	public String getProductList(Model theModel) throws InterruptedException {
+	public String getProductList(Model theModel) {
 		
 		//Commenting out to test @Scheduled scraping
 		/*
@@ -55,13 +55,12 @@ public class ProductController {
 
 		//add PriceHistory to the model
 		theModel.addAttribute("thePriceHistory", thePriceHistory);
+
+		//call method to get current pricing info
+		List<PriceHistory> currentPrices = productService.getCurrentPrices(productId);
 		
-		//call method to get latest wiggle price
-		PriceHistory latestWigglePrice = productService.getLatestWigglePrice(productId);
-		PriceHistory latestCrcPrice = productService.getLatestCrcPrice(productId);
-		
-		theModel.addAttribute("latestWigglePrice", latestWigglePrice);
-		theModel.addAttribute("latestCrcPrice", latestCrcPrice);
+		//add current pricing info to model
+		theModel.addAttribute("currentPrices", currentPrices);
 		
 		//return the thymeleaf page
 		return "product";

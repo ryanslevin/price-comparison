@@ -1,5 +1,7 @@
 package com.rs.webscraper.dao;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -128,38 +130,30 @@ public class ProductDaoImpl implements ProductDao{
 	}
 
 	@Override
-	public PriceHistory getLatestWigglePrice(int productId) {
+	public List<PriceHistory> getCurrentPrices(int productId) {
 		
 		//get current hibernate session
 		Session session = entityManager.unwrap(Session.class);
 		
-		//create query
-		Query getPriceHistory = session.createQuery("FROM PriceHistory WHERE "
+		//create query to get the most recent pricehistory for product from wiggle, max result of 1
+		Query getWiggleCurrentPrice = session.createQuery("FROM PriceHistory WHERE "
 				+ "(productId = "+productId+" AND websiteId = 1)"
-						+ " ORDER BY id DESC");
+						+ " ORDER BY date_time").setFirstResult(0).setMaxResults(1);
 		
-		//get PriceHistory where productId equals param
-		List<PriceHistory> thePriceHistory = getPriceHistory.getResultList();
-		
-		System.out.println(thePriceHistory.get(0));
-		return thePriceHistory.get(0);
-	}
-
-	@Override
-	public PriceHistory getLatestCrcPrice(int productId) {
-		//get current hibernate session
-		Session session = entityManager.unwrap(Session.class);
-		
-		//create query
-		Query getPriceHistory = session.createQuery("FROM PriceHistory WHERE "
+		//create query to get the most recent pricehistory for product from crc, max result of 1		
+		Query getCrcCurrentPrice = session.createQuery("FROM PriceHistory WHERE "
 				+ "(productId = "+productId+" AND websiteId = 2)"
-						+ " ORDER BY id DESC");
+						+ " ORDER BY date_time").setFirstResult(0).setMaxResults(1);		
 		
-		//get PriceHistory where productId equals param
-		List<PriceHistory> thePriceHistory = getPriceHistory.getResultList();
+		//Add pricehistories to currentPrices list
+		List<PriceHistory> currentPrices = getWiggleCurrentPrice.getResultList();
+		currentPrices.addAll(getCrcCurrentPrice.getResultList());
+
+		//Sort list based on the lowest sale price
+		currentPrices.sort(Comparator.comparing(PriceHistory::getSalePrice));
 		
-		System.out.println(thePriceHistory.get(0));
-		return thePriceHistory.get(0);
+		//return the current price histories
+		return currentPrices;
 	}
 	
 	
