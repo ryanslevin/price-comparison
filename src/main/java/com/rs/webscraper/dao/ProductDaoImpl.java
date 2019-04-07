@@ -89,6 +89,78 @@ public class ProductDaoImpl implements ProductDao{
 		return thePriceHistory;
 	}
 
+	@Override
+	public List<Product> getCategoryProducts(String category) {
+
+		//get current hibernate session
+		Session session = entityManager.unwrap(Session.class);
+		
+		//create query
+		Query getProductsByCategory = session.createQuery("FROM Product WHERE (Category = '"+category+"')");
+		
+		System.out.println(getProductsByCategory);
+		
+		//get products where category equals param
+		List<Product> theProducts = getProductsByCategory.getResultList();
+		
+		//return products
+		return theProducts;
+	}
+	
+	@Override
+	public List<Product> getSubCategoryProducts(String subCategory) {
+
+		//get current hibernate session
+		Session session = entityManager.unwrap(Session.class);
+		
+		//create query
+		Query getProductsBySubCategory = session.createQuery("FROM Product WHERE (subCategory = '"+subCategory+"')");
+		
+		System.out.println("FROM Product WHERE (subCategory = '"+subCategory+"')");
+		System.out.println(getProductsBySubCategory.toString());
+		
+		//get products where category equals param
+		List<Product> theProducts = getProductsBySubCategory.getResultList();
+		System.out.println(theProducts);
+		
+		//return products
+		return theProducts;
+	}
+
+	@Override
+	public PriceHistory getLatestWigglePrice(int productId) {
+		
+		//get current hibernate session
+		Session session = entityManager.unwrap(Session.class);
+		
+		//create query
+		Query getPriceHistory = session.createQuery("FROM PriceHistory WHERE "
+				+ "(productId = "+productId+" AND websiteId = 1)"
+						+ " ORDER BY id DESC");
+		
+		//get PriceHistory where productId equals param
+		List<PriceHistory> thePriceHistory = getPriceHistory.getResultList();
+		
+		System.out.println(thePriceHistory.get(0));
+		return thePriceHistory.get(0);
+	}
+
+	@Override
+	public PriceHistory getLatestCrcPrice(int productId) {
+		//get current hibernate session
+		Session session = entityManager.unwrap(Session.class);
+		
+		//create query
+		Query getPriceHistory = session.createQuery("FROM PriceHistory WHERE "
+				+ "(productId = "+productId+" AND websiteId = 2)"
+						+ " ORDER BY id DESC");
+		
+		//get PriceHistory where productId equals param
+		List<PriceHistory> thePriceHistory = getPriceHistory.getResultList();
+		
+		System.out.println(thePriceHistory.get(0));
+		return thePriceHistory.get(0);
+	}
 	
 	
 }

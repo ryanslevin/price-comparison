@@ -25,7 +25,10 @@ public class ProductController {
 	@GetMapping("/list")
 	public String getProductList(Model theModel) throws InterruptedException {
 		
+		//Commenting out to test @Scheduled scraping
+		/*
 		scraperController.scrapeProducts();
+		*/
 		
 		//Create a list object and call getProducts method on service
 		List<Product> theProducts = productService.getProducts();
@@ -47,10 +50,18 @@ public class ProductController {
 		//add product to model
 		theModel.addAttribute("theProduct", theProduct);
 		
-		//call method to get PriceHistory objects for Product
+		//call method to get full PriceHistory objects for Product
 		List<PriceHistory> thePriceHistory = productService.getPriceHistory(productId);
-		
+
+		//add PriceHistory to the model
 		theModel.addAttribute("thePriceHistory", thePriceHistory);
+		
+		//call method to get latest wiggle price
+		PriceHistory latestWigglePrice = productService.getLatestWigglePrice(productId);
+		PriceHistory latestCrcPrice = productService.getLatestCrcPrice(productId);
+		
+		theModel.addAttribute("latestWigglePrice", latestWigglePrice);
+		theModel.addAttribute("latestCrcPrice", latestCrcPrice);
 		
 		//return the thymeleaf page
 		return "product";
@@ -67,6 +78,32 @@ public class ProductController {
 		
 		return "product-list";
 	}
+	
+	
+	@GetMapping("/category/{category}")
+	public String getCategoryProducts(@PathVariable String category, Model theModel) {
+		
+		//call method to get the products from service by category
+		List<Product> theProducts = productService.getCategoryProducts(category);
+		
+		//add products to model
+		theModel.addAttribute("theProducts", theProducts);
+		
+		return "product-list";
+	}
+	
+	@GetMapping("/subcategory/{subCategory}")
+	public String getSubCategoryProducts(@PathVariable String subCategory, Model theModel) {
+		
+		//call method to get the products from service by category
+		List<Product> theProducts = productService.getSubCategoryProducts(subCategory);
+		
+		//add products to model
+		theModel.addAttribute("theProducts", theProducts);
+		
+		return "product-list";
+	}
+	
 	
 	
 	

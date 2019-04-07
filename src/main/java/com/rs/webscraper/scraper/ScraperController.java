@@ -28,7 +28,7 @@ public class ScraperController {
 	ChainReactionCyclesScraper chainReactionCyclesScraper;
 	
 	@Transactional
-	public void scrapeProducts(){
+	public void scrapeProducts() throws InterruptedException{
 		
 		//get current hibernate session
 		Session session = entityManager.unwrap(Session.class);
@@ -46,13 +46,18 @@ public class ScraperController {
 		for (Product product : theProducts) {
 			
 			//Create PriceHistory objects for each site and call appropriate scraping method to populate
+			System.out.println("Scraping wiggle");
 			PriceHistory wigglePriceHistory = wiggleUkScraper.scrape(product, theWebsites.get(0));
+			System.out.println("Scraping crc");			
 			PriceHistory chainReactionPriceHistory = chainReactionCyclesScraper.scrape(product, theWebsites.get(1));
 
 			//save PriceHistory products to DB
+			System.out.println("Saving wiggle to DB");
 			session.saveOrUpdate(wigglePriceHistory);
+			System.out.println("Saving crc to DB");
 			session.saveOrUpdate(chainReactionPriceHistory);
 			
+			TimeUnit.SECONDS.sleep(60);
 			
 		}
 		

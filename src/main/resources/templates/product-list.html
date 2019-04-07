@@ -31,12 +31,14 @@
 	<thead>
 		<th scope="col">Title</th>
 		<th scope="col">Category</th>
+		<th scope="col">Sub-Category</th>
 		<th scope="col">Brand</th>
 	</thead>
 	<tbody>
 	<tr th:each="product : ${theProducts}">
 		<td><a th:href=@{/list/}+${product.id}><p th:text=${product.name}></p></a></td>
-		<td th:text=${product.category}></td>
+		<td><a th:href=@{/category/}+${product.category}><p th:text=${product.category}></p></a></td>
+		<td><a th:href=@{/subcategory/}+${product.subCategory}><p th:text=${product.subCategory}></p></a></td>				
 		<td><a th:href=@{/brand/}+${product.brand}><p th:text=${product.brand}></p></a></td>	
 	</tr>
 	</tbody>	

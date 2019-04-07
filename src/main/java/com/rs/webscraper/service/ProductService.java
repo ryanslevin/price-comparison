@@ -15,6 +15,14 @@ public interface ProductService {
 	public List<Product> getBrandProducts(String brand);
 
 	public List<PriceHistory> getPriceHistory(int productId);
-	
+
+	public List<Product> getCategoryProducts(String category);
+
+	public List<Product> getSubCategoryProducts(String subCategory);
+
+	public PriceHistory getLatestWigglePrice(int productId);
+
+	public PriceHistory getLatestCrcPrice(int productId);
+
 	
 }

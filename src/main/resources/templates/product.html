@@ -3,53 +3,84 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet" />
-<link href="../static/css/scraper.css" th:href="@{/css/scraper.css}" rel="stylesheet" />
-<title>Product List</title>
-</head>
-<body>
-<div class="container">
-<br><br>
-<h1 th:text=${theProduct.name}></h1>
-<h2 th:text=${theProduct.brand}></h2>
-<br><br>
-<a th:href=@{/list}>Back to Product List</a>
-<br><br>
-<div class="jumbotron">
-	<table class="table">
-	<thead>
-		<th scope="col">Title</th>
-		<th scope="col">Category</th>
-		<th scope="col">Manufacturer</th>
-	</thead>
-	<tbody>
-	<tr>
-		<td th:text=${theProduct.name}></td>
-		<td th:text=${theProduct.category}></td>		
-		<td th:text=${theProduct.brand}></td>	
-	</tr>
-	</tbody>	
-	</table>
-</div>
-<div class="jumbotron">
-	<table class="table">
-	<thead>
-		<th scope="col">Website</th>
-		<th scope="col">Date</th>
-		<th scope="col">Sale Price</th>
-		<th scope="col">Unit Price</th>		
-	</thead>
-	<tbody>
-	<tr th:each="priceHistory : ${thePriceHistory}">
-		<td th:text=${priceHistory.websiteId.name}></td>	
-		<td th:text=${priceHistory.dateTimeScraped}></td>	
-		<td th:text=${priceHistory.salePrice}></td>
-		<td th:text=${priceHistory.unitPrice}></td>
-	</tr>
-	</tbody>	
-	</table>
-</div>
+<link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}"
+	rel="stylesheet" />
+<link href="../static/css/scraper.css" th:href="@{/css/scraper.css}"
+	rel="stylesheet" />
+	
+<script src="path/to/chartjs/dist/Chart.js"></script>
+<title th:text="${'CyclingScraper - ' + theProduct.name}"></title>
 
-</div>
+</head>
+
+
+<body>
+	<div class="container">
+		<br>
+		<a th:href=@{/list}>Back to Product List</a>
+		<br>
+		<br>
+		<h1 th:text=${theProduct.name}></h1>
+		<h2 th:text=${theProduct.brand}></h2>
+		<h3 th:text=${theProduct.category}></h3>
+		
+		<br>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+				
+				<img th:src=${theProduct.imageUrl} class="img-fluid"></img>
+				
+				</div>
+				
+				<div class="col">
+				
+				<!-- add latest pricing info here -->
+				<div class="jumbotron">
+					<table class="table">
+						<thead>
+							<th scope="col">Website</th>
+							<th scope="col">Sale Price</th>
+							<th scope="col">Link</th>
+						</thead>
+						<tbody>
+							<tr>
+								<td th:text=${latestWigglePrice.websiteId.name}></td>
+								<td th:text=${latestWigglePrice.salePrice}></td>
+								<td><a th:href=${latestWigglePrice.productId.wiggleComUrl}>Buy Now!</a></td>
+							</tr>
+							<tr>
+								<td th:text=${latestCrcPrice.websiteId.name}></td>
+								<td th:text=${latestCrcPrice.salePrice}></td>
+								<td><a th:href=${latestCrcPrice.productId.chainReactionCyclesComUrl}>Buy Now!</a></td>
+							</tr>							
+						</tbody>
+					</table>
+
+				</div>
+				</div>
+				</div>
+				<div class="jumbotron">
+					<table class="table">
+						<thead>
+							<th scope="col">Website</th>
+							<th scope="col">Date</th>
+							<th scope="col">Sale Price</th>
+							<th scope="col">Unit Price</th>
+						</thead>
+						<tbody>
+							<tr th:each="priceHistory : ${thePriceHistory}">
+								<td th:text=${priceHistory.websiteId.name}></td>
+								<td th:text=${priceHistory.dateTimeScraped}></td>
+								<td th:text=${priceHistory.salePrice}></td>
+								<td th:text=${priceHistory.unitPrice}></td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

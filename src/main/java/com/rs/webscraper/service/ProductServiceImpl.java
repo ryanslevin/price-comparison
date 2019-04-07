@@ -45,4 +45,30 @@ public class ProductServiceImpl implements ProductService {
 		
 		return productDao.getPriceHistory(productId);
 	}
+
+	@Override
+	public List<Product> getCategoryProducts(String category) {
+
+		return productDao.getCategoryProducts(category);
+	}
+
+	@Override
+	public List<Product> getSubCategoryProducts(String subCategory) {
+
+		return productDao.getSubCategoryProducts(subCategory);
+	}
+
+	@Override
+	public PriceHistory getLatestWigglePrice(int productId) {
+		return productDao.getLatestWigglePrice(productId);
+	}
+
+	@Override
+	public PriceHistory getLatestCrcPrice(int productId) {
+		
+		return productDao.getLatestCrcPrice(productId);
+	}
+	
+	
+
 }

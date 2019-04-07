@@ -101,6 +101,8 @@ public class PriceHistory {
 		return "PriceHistory [id=" + id + ", productId=" + productId + ", websiteId=" + websiteId + ", dateTimeScraped="
 				+ dateTimeScraped + ", salePrice=" + salePrice + ", unitPrice=" + unitPrice + "]";
 	}
+	
+	
 
 	
 	
