@@ -38,12 +38,15 @@ public class PriceHistory {
 	@Column(name="scraped_url")
 	private String scrapedUrl;
 	
+	@Column(name="currency")
+	private String currency;
+	
 	public PriceHistory() {
 		
 	}
 
 	public PriceHistory(Product productId, Website websiteId, 
-			String dateTimeScraped, double salePrice, double unitPrice, String scrapedUrl ) {
+			String dateTimeScraped, double salePrice, double unitPrice, String scrapedUrl, String currency ) {
 		super();
 		this.productId = productId;
 		this.websiteId = websiteId;
@@ -51,6 +54,7 @@ public class PriceHistory {
 		this.salePrice = salePrice;
 		this.unitPrice = unitPrice;
 		this.scrapedUrl = scrapedUrl;
+		this.currency = currency;
 	}
 
 	public Integer getId() {
@@ -109,13 +113,22 @@ public class PriceHistory {
 		this.scrapedUrl = scrapedUrl;
 	}
 
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
 	@Override
 	public String toString() {
 		return "PriceHistory [id=" + id + ", productId=" + productId + ", websiteId=" + websiteId + ", dateTimeScraped="
-				+ dateTimeScraped + ", salePrice=" + salePrice 
-				+ ", unitPrice=" + unitPrice + ", scrapedUrl=" +scrapedUrl+"]";
+				+ dateTimeScraped + ", salePrice=" + salePrice + ", unitPrice=" + unitPrice + ", scrapedUrl="
+				+ scrapedUrl + ", currency=" + currency + "]";
 	}
-	
+
+
 	
 
 	

@@ -54,10 +54,12 @@ public class ChainReactionCyclesScraper {
 		
 		//Search through json data and assign product json data to product object
 		JsonObject productJson = jsonObject.get("product").getAsJsonObject();
+		JsonObject userJson = jsonObject.get("user").getAsJsonObject();
 		
 		//Parse json data and assign to variables
 		String salePriceText = productJson.get("price").getAsString();
 		String listPriceText = productJson.get("unit_price").getAsString();
+		String currency = userJson.get("currency").getAsString();
 
 		
 		//Remove dash and second price if salePriceText has a price range
@@ -67,7 +69,7 @@ public class ChainReactionCyclesScraper {
 		Double salePrice = Double.parseDouble(salePriceText);
 		Double listPrice = Double.parseDouble(listPriceText);
 		
-		return new PriceHistory(product, website, dateFormat.format(date), salePrice, listPrice, scrapedUrl);
+		return new PriceHistory(product, website, dateFormat.format(date), salePrice, listPrice, scrapedUrl, currency);
 		
 		}catch (Exception exc){
 			exc.printStackTrace();

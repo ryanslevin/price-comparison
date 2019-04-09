@@ -30,10 +30,11 @@ public class WiggleUKScraper {
 		//get elements properties
 		String salePriceText = doc.getElementsByClass("js-unit-price").text();
 		String unitPriceText = doc.getElementsByClass("js-list-price").text();
+		String currency = doc.getElementsByClass("bem-header__language-selector").attr("data-current-currency");
 		
 		//Remove dash and second price if salePriceText has a price range
 		salePriceText = salePriceText.replaceAll("-.*$", "");
-		unitPriceText = salePriceText.replaceAll("-.*$", "");
+		unitPriceText = unitPriceText.replaceAll("-.*$", "");
 		
 		//remove nondigits from string, leaves decimal in place
 		salePriceText = salePriceText.replaceAll("[a-z A-Z $ ,]", "");
@@ -44,7 +45,7 @@ public class WiggleUKScraper {
 		Double unitPrice = Double.parseDouble(unitPriceText);
 
 		//create and return new product object
-		return new PriceHistory(product, website, dateFormat.format(date), salePrice, unitPrice, scrapedUrl);
+		return new PriceHistory(product, website, dateFormat.format(date), salePrice, unitPrice, scrapedUrl, currency);
 
 		}catch (Exception e) {
 			e.printStackTrace();
