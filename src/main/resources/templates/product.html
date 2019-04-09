@@ -7,52 +7,57 @@
 	rel="stylesheet" />
 <link href="../static/css/scraper.css" th:href="@{/css/scraper.css}"
 	rel="stylesheet" />
-	
-<script src="path/to/chartjs/dist/Chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+
 <title th:text="${'CyclingScraper - ' + theProduct.name}"></title>
-
 </head>
-
-
 <body>
+	<div th:replace="fragments/navbar :: navbar">...</div>
 	<div class="container">
-		<br>
-		<a th:href=@{/list}>Back to Product List</a>
-		<br>
-		<br>
+		<br> <a th:href=@{/list}>Back to Product List</a> <br> <br>
 		<h1 th:text=${theProduct.name}></h1>
 		<h2 th:text=${theProduct.brand}></h2>
 		<h3 th:text=${theProduct.category}></h3>
-		
+
 		<br>
 		<div class="container">
 			<div class="row">
-				<div class="col">
-				
-				<img th:src=${theProduct.imageUrl} class="img-fluid"></img>
-				
+				<div class="col-md-4">
+
+					<img th:src=${theProduct.imageUrl}
+						class="img-fluid rounded mx-auto d-block"></img>
+
 				</div>
-				<div class="col">
-	
-				<!-- add current pricing info here -->
+				<div class="col-md-8">
+
+					<!-- add current pricing info here -->
+
+						<table class="table">
+							<tbody>
+								<tr th:each="currentPrice, iStat : ${currentPrices}"
+									th:style="${iStat.first}? 'font-weight: bold; color: red;'">
+									<td th:text="${'$'+currentPrice.salePrice}"></td>									
+									<td><a th:href=${currentPrice.scrapedUrl} class="btn btn-secondary" 
+									th:classappend="${iStat.first}? 'btn btn-success'">Buy Now!</a></td>									
+									<td th:text=${currentPrice.websiteId.name}></td>
+								</tr>
+							</tbody>
+						</table>
 				</div>
+				</div>
+				<br>
 				<div class="jumbotron">
-					<table class="table">
-						<thead>
-							<th scope="col">Website</th>
-							<th scope="col">Sale Price</th>
-						</thead>
-						<tbody>
-							<tr th:each="currentPrice, iStat : ${currentPrices}"
-								 th:style="${iStat.first}? 'font-weight: bold; color: red;'">
-								<td th:text=${currentPrice.websiteId.name}></td>
-								<td th:text=${currentPrice.salePrice}></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				</div>
-				<div class="jumbotron">
+				<h2>Price History</h2>
 					<table class="table">
 						<thead>
 							<th scope="col">Website</th>
@@ -73,5 +78,7 @@
 				</div>
 			</div>
 		</div>
+		<br> <br>
+		<div th:replace="fragments/footer :: footer">...</div>
 </body>
 </html>

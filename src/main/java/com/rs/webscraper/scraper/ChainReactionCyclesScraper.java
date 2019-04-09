@@ -27,8 +27,10 @@ public class ChainReactionCyclesScraper {
 				
 		try {
 		
+		String scrapedUrl = product.getChainReactionCyclesComUrl();
+			
 		//get doc from link
-		Document doc = Jsoup.connect(product.getChainReactionCyclesComUrl()).get();
+		Document doc = Jsoup.connect(scrapedUrl).get();
 		
 		//pull elements with the tag script from doc
 		Elements elements = doc.getElementsByTag("script"); 
@@ -65,7 +67,7 @@ public class ChainReactionCyclesScraper {
 		Double salePrice = Double.parseDouble(salePriceText);
 		Double listPrice = Double.parseDouble(listPriceText);
 		
-		return new PriceHistory(product, website, dateFormat.format(date), salePrice, listPrice);
+		return new PriceHistory(product, website, dateFormat.format(date), salePrice, listPrice, scrapedUrl);
 		
 		}catch (Exception exc){
 			exc.printStackTrace();

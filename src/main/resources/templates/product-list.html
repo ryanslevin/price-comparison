@@ -8,6 +8,9 @@
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/datatables.min.css"/> 
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/datatables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 <!-- JS for sortable table -->
 <script>$(document).ready( function () {
@@ -16,6 +19,7 @@
 
 <title>Product List</title>
 </head>
+<div th:replace="fragments/navbar :: navbar">...</div>
 <body>
 <div class="container">
 <br><br>
@@ -26,7 +30,7 @@
 
 <!-- Iterate through model to populate table with list of products -->
 <br><br>
-<div class="jumbotron">
+<div class="container">
 	<table class="table" id="productTable">
 	<thead>
 		<th scope="col">Title</th>
@@ -36,6 +40,7 @@
 	</thead>
 	<tbody>
 	<tr th:each="product : ${theProducts}">
+		<td><img th:src=${product.imageUrl} th:class='img-thumbnail'></td>
 		<td><a th:href=@{/list/}+${product.id}><p th:text=${product.name}></p></a></td>
 		<td><a th:href=@{/category/}+${product.category}><p th:text=${product.category}></p></a></td>
 		<td><a th:href=@{/subcategory/}+${product.subCategory}><p th:text=${product.subCategory}></p></a></td>				
@@ -45,5 +50,6 @@
 	</table>
 </div>
 </div>
+<div th:replace="fragments/footer :: footer">...</div>
 </body>
 </html>
