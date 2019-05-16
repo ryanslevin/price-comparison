@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class ProductController {
 	@Autowired
 	ScraperController scraperController;
 	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping("/products")
 	public List<Product> getProductList(Model theModel) {
 		
@@ -33,7 +35,7 @@ public class ProductController {
 		return theProducts;
 	}
 	
-	
+	@CrossOrigin(origins = "http://localhost:3000")	
 	@RequestMapping("/product/{productId}")
 	public Product getProduct(@PathVariable int productId, Model theModel) {
 		
@@ -43,7 +45,8 @@ public class ProductController {
 		//return the thymeleaf page
 		return theProduct;
 	}
-	
+
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping("/pricehistory/{productId}")
 	public List<PriceHistory> getPriceHistory(@PathVariable int productId, Model theModel) {
 		
@@ -56,7 +59,8 @@ public class ProductController {
 		//return the thymeleaf page
 		return thePriceHistory;
 	}	
-	
+
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping("/currentprices/{productId}")
 	public List<PriceHistory> getCurrentPrices(@PathVariable int productId, Model theModel) {
 		
@@ -67,7 +71,7 @@ public class ProductController {
 		return currentPrices;
 	}		
 	
-	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping("/brand/{brand}")
 	public List<Product> getBrandProducts(@PathVariable String brand, Model theModel) {
 		
@@ -77,7 +81,7 @@ public class ProductController {
 		return theProducts;
 	}
 	
-	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping("/category/{category}")
 	public List<Product> getCategoryProducts(@PathVariable String category, Model theModel) {
 		
@@ -87,6 +91,7 @@ public class ProductController {
 		return theProducts;
 	}
 	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping("/subcategory/{subCategory}")
 	public List<Product> getSubCategoryProducts(@PathVariable String subCategory, Model theModel) {
 		
