@@ -46,30 +46,7 @@ public class ProductController {
 		return theProduct;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
-	@RequestMapping("/pricehistory/{productId}")
-	public List<PriceHistory> getPriceHistory(@PathVariable int productId, Model theModel) {
 		
-		//call method to get full PriceHistory objects for Product
-		List<PriceHistory> thePriceHistory = productService.getPriceHistory(productId);
-
-		//call method to get current pricing info
-		List<PriceHistory> currentPrices = productService.getCurrentPrices(productId);
-
-		//return the thymeleaf page
-		return thePriceHistory;
-	}	
-
-	@CrossOrigin(origins = "http://localhost:3000")
-	@RequestMapping("/currentprices/{productId}")
-	public List<PriceHistory> getCurrentPrices(@PathVariable int productId, Model theModel) {
-		
-		//call method to get current pricing info
-		List<PriceHistory> currentPrices = productService.getCurrentPrices(productId);
-
-		//return the thymeleaf page
-		return currentPrices;
-	}		
 	
 	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping("/brand/{brand}")
@@ -100,9 +77,5 @@ public class ProductController {
 
 		return theProducts;
 	}
-	
-	
-	
-	
 	
 }

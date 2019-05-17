@@ -13,8 +13,6 @@ import com.rs.webscraper.scraper.WiggleUKScraper;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-	
-	//Autowire product database access object
 	@Autowired
 	ProductDao productDao;
 	
@@ -40,11 +38,7 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.getBrandProducts(brand);
 	}
 
-	@Override
-	public List<PriceHistory> getPriceHistory(int productId) {
-		
-		return productDao.getPriceHistory(productId);
-	}
+
 
 	@Override
 	public List<Product> getCategoryProducts(String category) {
@@ -58,11 +52,7 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.getSubCategoryProducts(subCategory);
 	}
 
-	@Override
-	public List<PriceHistory> getCurrentPrices(int productId) {
 
-		return productDao.getCurrentPrices(productId);
-	}
 	
 	
 

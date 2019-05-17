@@ -9,18 +9,14 @@ public interface ProductDao {
 	
 	public List<Product> getProducts();
 	
-	public void savePriceHistory(PriceHistory priceHistory);
+
 
 	public Product getProduct(int id);
 
 	public List<Product> getBrandProducts(String brand);
 
-	public List<PriceHistory> getPriceHistory(int productId);
-
 	public List<Product> getCategoryProducts(String category);
 
 	public List<Product> getSubCategoryProducts(String subCategory);
-
-	public List<PriceHistory> getCurrentPrices(int productId);
 
 }
