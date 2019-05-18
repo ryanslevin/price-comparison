@@ -38,15 +38,16 @@ public class PriceHistory {
 	@Column(name="scraped_url")
 	private String scrapedUrl;
 	
-	@Column(name="currency")
-	private String currency;
+	@ManyToOne(targetEntity=Currency.class)
+	@JoinColumn(name="currency_id", referencedColumnName="id")
+	private Currency currency;
 	
 	public PriceHistory() {
 		
 	}
 
 	public PriceHistory(Product productId, Website websiteId, 
-			String dateTimeScraped, double salePrice, double unitPrice, String scrapedUrl, String currency ) {
+			String dateTimeScraped, double salePrice, double unitPrice, String scrapedUrl, Currency currency ) {
 		super();
 		this.productId = productId;
 		this.websiteId = websiteId;
@@ -113,11 +114,11 @@ public class PriceHistory {
 		this.scrapedUrl = scrapedUrl;
 	}
 
-	public String getCurrency() {
+	public Currency getCurrency() {
 		return currency;
 	}
 
-	public void setCurrency(String currency) {
+	public void setCurrency(Currency currency) {
 		this.currency = currency;
 	}
 

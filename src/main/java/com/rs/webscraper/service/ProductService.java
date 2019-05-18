@@ -14,13 +14,8 @@ public interface ProductService {
 	
 	public List<Product> getBrandProducts(String brand);
 
-
-
 	public List<Product> getCategoryProducts(String category);
 
 	public List<Product> getSubCategoryProducts(String subCategory);
 
-
-
-	
 }

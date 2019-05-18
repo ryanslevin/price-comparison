@@ -13,12 +13,17 @@ import org.springframework.stereotype.Component;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.rs.webscraper.entity.Currency;
 import com.rs.webscraper.entity.PriceHistory;
 import com.rs.webscraper.entity.Product;
 import com.rs.webscraper.entity.Website;
+import com.rs.webscraper.util.CurrencyChecker;
 
 @Component
 public class ChainReactionCyclesScraper {
+	
+	@Autowired
+	CurrencyChecker currencyChecker;
 
 	public PriceHistory scrape(Product product, Website website) {
 		
@@ -59,8 +64,10 @@ public class ChainReactionCyclesScraper {
 		//Parse json data and assign to variables
 		String salePriceText = productJson.get("price").getAsString();
 		String listPriceText = productJson.get("unit_price").getAsString();
-		String currency = userJson.get("currency").getAsString();
-
+		String currencyText = userJson.get("currency").getAsString();
+		
+		//Check currency code against codes in db and return appropriate currency
+		Currency currency = currencyChecker.checkCurrency(currencyText);
 		
 		//Remove dash and second price if salePriceText has a price range
 		salePriceText = salePriceText.replaceAll("-.*$", "");

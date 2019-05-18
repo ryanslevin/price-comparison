@@ -15,11 +15,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	ProductDao productDao;
-	
-	//Autowire wiggle.co.uk scraper
-	@Autowired
-	WiggleUKScraper wiggleUKScraper;
-	
+
 	@Override
 	public List<Product> getProducts() {
 		
