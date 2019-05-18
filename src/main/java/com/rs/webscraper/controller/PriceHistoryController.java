@@ -20,25 +20,22 @@ public class PriceHistoryController {
 	
 	
 	@CrossOrigin(origins = "http://localhost:3000")
-	@RequestMapping("/pricehistory/{productId}")
-	public List<PriceHistory> getPriceHistory(@PathVariable int productId, Model theModel) {
+	@RequestMapping("/pricehistory/{productId}/{currencyId}")
+	public List<PriceHistory> getPriceHistory(@PathVariable int productId, @PathVariable int currencyId) {
 		
 		//call method to get full PriceHistory objects for Product
-		List<PriceHistory> thePriceHistory = priceHistoryService.getPriceHistory(productId);
-
-		//call method to get current pricing info
-		List<PriceHistory> currentPrices = priceHistoryService.getCurrentPrices(productId);
+		List<PriceHistory> thePriceHistory = priceHistoryService.getPriceHistory(productId, currencyId);
 
 		//return the thymeleaf page
 		return thePriceHistory;
-	}	
+	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
-	@RequestMapping("/currentprices/{productId}")
-	public List<PriceHistory> getCurrentPrices(@PathVariable int productId, Model theModel) {
+	@RequestMapping("/currentprices/{productId}/{currencyId}")
+	public List<PriceHistory> getCurrentPrices(@PathVariable int productId, @PathVariable int currencyId) {
 		
 		//call method to get current pricing info
-		List<PriceHistory> currentPrices = priceHistoryService.getCurrentPrices(productId);
+		List<PriceHistory> currentPrices = priceHistoryService.getCurrentPrices(productId, currencyId);
 
 		//return the thymeleaf page
 		return currentPrices;

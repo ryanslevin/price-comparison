@@ -16,14 +16,14 @@ public class PriceHistoryServiceImpl implements PriceHistoryService {
 	PriceHistoryDao priceHistoryDao;
 	
 	@Override
-	public List<PriceHistory> getPriceHistory(int productId) {
+	public List<PriceHistory> getPriceHistory(int productId, int currencyId) {
 		
-		return priceHistoryDao.getPriceHistory(productId);
+		return priceHistoryDao.getPriceHistory(productId, currencyId);
 	}
 	
 	@Override
-	public List<PriceHistory> getCurrentPrices(int productId) {
+	public List<PriceHistory> getCurrentPrices(int productId, int currencyId) {
 
-		return priceHistoryDao.getCurrentPrices(productId);
+		return priceHistoryDao.getCurrentPrices(productId, currencyId);
 	}
 }
