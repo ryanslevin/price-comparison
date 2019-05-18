@@ -23,7 +23,9 @@ public class WiggleUKScraper {
 	
 	public PriceHistory scrape(Product product, Website website) {
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		//create formatters for date and time fields
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 		Date date = new Date();
 		
 		try {
@@ -53,7 +55,7 @@ public class WiggleUKScraper {
 		Double unitPrice = Double.parseDouble(unitPriceText);
 
 		//create and return new product object
-		return new PriceHistory(product, website, dateFormat.format(date), salePrice, unitPrice, scrapedUrl, currency);
+		return new PriceHistory(product, website, dateFormat.format(date), timeFormat.format(date), salePrice, unitPrice, scrapedUrl, currency);
 
 		}catch (Exception e) {
 			e.printStackTrace();

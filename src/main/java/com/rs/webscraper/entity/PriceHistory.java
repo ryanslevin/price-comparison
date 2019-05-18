@@ -26,8 +26,11 @@ public class PriceHistory {
 	@JoinColumn(name = "website_id", referencedColumnName= "id")
 	private Website websiteId;
 	
-	@Column(name="date_time")
-	private String dateTimeScraped;
+	@Column(name="date")
+	private String date;
+	
+	@Column(name="time")
+	private String time;
 	
 	@Column(name="sale_price")
 	private double salePrice;
@@ -47,11 +50,12 @@ public class PriceHistory {
 	}
 
 	public PriceHistory(Product productId, Website websiteId, 
-			String dateTimeScraped, double salePrice, double unitPrice, String scrapedUrl, Currency currency ) {
+			String date, String time, double salePrice, double unitPrice, String scrapedUrl, Currency currency ) {
 		super();
 		this.productId = productId;
 		this.websiteId = websiteId;
-		this.dateTimeScraped = dateTimeScraped;
+		this.date = date;
+		this.time = time;
 		this.salePrice = salePrice;
 		this.unitPrice = unitPrice;
 		this.scrapedUrl = scrapedUrl;
@@ -82,13 +86,22 @@ public class PriceHistory {
 		this.websiteId = websiteId;
 	}
 
-	public String getDateTimeScraped() {
-		return dateTimeScraped;
+	public String getDate() {
+		return date;
 	}
 
-	public void setDateTimeScraped(String dateTimeScraped) {
-		this.dateTimeScraped = dateTimeScraped;
+	public void setDate(String date) {
+		this.date = date;
 	}
+	
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}	
+	
 
 	public double getSalePrice() {
 		return salePrice;
@@ -124,8 +137,8 @@ public class PriceHistory {
 
 	@Override
 	public String toString() {
-		return "PriceHistory [id=" + id + ", productId=" + productId + ", websiteId=" + websiteId + ", dateTimeScraped="
-				+ dateTimeScraped + ", salePrice=" + salePrice + ", unitPrice=" + unitPrice + ", scrapedUrl="
+		return "PriceHistory [id=" + id + ", productId=" + productId + ", websiteId=" + websiteId + ", date="
+				+ date + ", time="+date+", salePrice=" + salePrice + ", unitPrice=" + unitPrice + ", scrapedUrl="
 				+ scrapedUrl + ", currency=" + currency + "]";
 	}
 

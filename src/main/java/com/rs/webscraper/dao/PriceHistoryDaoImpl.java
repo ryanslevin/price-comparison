@@ -37,7 +37,7 @@ public class PriceHistoryDaoImpl implements PriceHistoryDao {
 		
 		//create query
 		Query getPriceHistory = session.createQuery(
-				"FROM PriceHistory WHERE (productId = "+productId+" AND currency = "+currencyId+") ORDER BY date_time DESC").setFirstResult(0).setMaxResults(20);
+				"FROM PriceHistory WHERE (productId = "+productId+" AND currency = "+currencyId+") ORDER BY date DESC").setFirstResult(0).setMaxResults(20);
 		
 		//get PriceHistory where productId equals param
 		List<PriceHistory> thePriceHistory = getPriceHistory.getResultList();
@@ -54,12 +54,12 @@ public class PriceHistoryDaoImpl implements PriceHistoryDao {
 		//create query to get the most recent pricehistory for product from wiggle, max result of 1
 		Query getWiggleCurrentPrice = session.createQuery("FROM PriceHistory WHERE "
 				+ "(productId = "+productId+" AND currency = "+currencyId+" AND websiteId = 1)"
-						+ " ORDER BY date_time DESC").setFirstResult(0).setMaxResults(1);
+						+ " ORDER BY date DESC").setFirstResult(0).setMaxResults(1);
 		
 		//create query to get the most recent pricehistory for product from crc, max result of 1		
 		Query getCrcCurrentPrice = session.createQuery("FROM PriceHistory WHERE "
 				+ "(productId = "+productId+" AND currency = "+currencyId+" AND websiteId = 2)"
-						+ " ORDER BY date_time DESC").setFirstResult(0).setMaxResults(1);		
+						+ " ORDER BY date DESC").setFirstResult(0).setMaxResults(1);		
 		
 		//Add pricehistories to currentPrices list
 		List<PriceHistory> currentPrices = getWiggleCurrentPrice.getResultList();

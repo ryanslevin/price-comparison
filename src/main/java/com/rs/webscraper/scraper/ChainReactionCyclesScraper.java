@@ -28,8 +28,9 @@ public class ChainReactionCyclesScraper {
 	public PriceHistory scrape(Product product, Website website) {
 		
 		Date date = new Date();
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");	
+		
 		try {
 		
 		String scrapedUrl = product.getChainReactionCyclesComUrl();
@@ -76,7 +77,7 @@ public class ChainReactionCyclesScraper {
 		Double salePrice = Double.parseDouble(salePriceText);
 		Double listPrice = Double.parseDouble(listPriceText);
 		
-		return new PriceHistory(product, website, dateFormat.format(date), salePrice, listPrice, scrapedUrl, currency);
+		return new PriceHistory(product, website, dateFormat.format(date), timeFormat.format(date), salePrice, listPrice, scrapedUrl, currency);
 		
 		}catch (Exception exc){
 			exc.printStackTrace();
