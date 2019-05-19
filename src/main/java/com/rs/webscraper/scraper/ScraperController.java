@@ -56,8 +56,7 @@ public class ScraperController {
 			session.saveOrUpdate(wigglePriceHistory);
 			System.out.println("Saving crc to DB");
 			session.saveOrUpdate(chainReactionPriceHistory);
-			
-			TimeUnit.SECONDS.sleep(60);
+
 			
 		}
 		

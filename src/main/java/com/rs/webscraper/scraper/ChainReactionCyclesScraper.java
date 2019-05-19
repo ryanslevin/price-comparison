@@ -54,6 +54,7 @@ public class ChainReactionCyclesScraper {
 				break;
 			}
 		}
+		System.out.println("crc"+docData);
 		
 		//Create new JsonObject to parse json data
 		JsonObject jsonObject = new JsonParser().parse(docData).getAsJsonObject();
@@ -64,7 +65,9 @@ public class ChainReactionCyclesScraper {
 		
 		//Parse json data and assign to variables
 		String salePriceText = productJson.get("price").getAsString();
-		String listPriceText = productJson.get("unit_price").getAsString();
+		String unitPriceText = productJson.get("unit_price").getAsString();
+		
+		System.out.println("SalePrice: "+salePriceText+"\nUnitPrice: "+unitPriceText);
 		String currencyText = userJson.get("currency").getAsString();
 		
 		//Check currency code against codes in db and return appropriate currency
@@ -74,10 +77,19 @@ public class ChainReactionCyclesScraper {
 		salePriceText = salePriceText.replaceAll("-.*$", "");
 		
 		//Turn string price data into double
-		Double salePrice = Double.parseDouble(salePriceText);
-		Double listPrice = Double.parseDouble(listPriceText);
+		//turn string into double
+		Double salePrice;
+		Double unitPrice;
 		
-		return new PriceHistory(product, website, dateFormat.format(date), timeFormat.format(date), salePrice, listPrice, scrapedUrl, currency);
+		if (salePriceText.equals("")) {
+			salePrice = Double.parseDouble(unitPriceText);
+		}else {
+			salePrice = Double.parseDouble(salePriceText);
+		}
+		
+		unitPrice = Double.parseDouble(unitPriceText);
+		
+		return new PriceHistory(product, website, dateFormat.format(date), timeFormat.format(date), salePrice, unitPrice, scrapedUrl, currency);
 		
 		}catch (Exception exc){
 			exc.printStackTrace();

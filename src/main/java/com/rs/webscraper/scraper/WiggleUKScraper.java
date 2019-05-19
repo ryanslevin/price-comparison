@@ -6,9 +6,13 @@ import java.util.Date;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.rs.webscraper.entity.Currency;
 import com.rs.webscraper.entity.PriceHistory;
 import com.rs.webscraper.entity.Product;
@@ -31,14 +35,39 @@ public class WiggleUKScraper {
 		try {
 			
 		//Get url for page being scraped
-		String scrapedUrl = product.getWiggleComUrl();	
+		String scrapedUrl = product.getWiggleComUrl();
 		
 		Document doc = Jsoup.connect(scrapedUrl).get();
 		
-		//get elements properties
-		String salePriceText = doc.getElementsByClass("js-unit-price").text();
-		String unitPriceText = doc.getElementsByClass("js-list-price").text();
+		//Pull elements with the tag script from the doc
+		Elements elements = doc.getElementsByTag("script");
+		
+		String docData = "";
+
+		//iterate through elements and look for element with the window.universal_variable
+		for (Element element:elements) {
+	
+			if (element.data().contains("window.universal_variable.product")) {
+				
+				//replace blank space and string from the beginning of json data
+				docData = element.data().replace("window.universal_variable = window.universal_variable || { \"version\": \"1.2.1\" };", "").trim();
+				docData = docData.replace("window.universal_variable.product = ","").trim();
+				System.out.println(docData);
+				break;
+			}
+		}
+		
+		//Create new JsonObject to parse json data
+		JsonObject jsonObject = new JsonParser().parse(docData).getAsJsonObject();
+
+		//Parse json data and assign to variables
+		String salePriceText = jsonObject.get("unit_sale_price").getAsString();
+		String unitPriceText = jsonObject.get("unit_price").getAsString();
+		
+		
 		String currencyText = doc.getElementsByClass("bem-header__language-selector").attr("data-current-currency");
+		
+		System.out.println("SalePrice: "+salePriceText+"\nUnitPrice: "+unitPriceText);
 		
 		//Remove dash and second price if salePriceText has a price range
 		salePriceText = salePriceText.replaceAll("-.*$", "");
@@ -46,13 +75,22 @@ public class WiggleUKScraper {
 		
 		//remove nondigits from string, leaves decimal in place
 		salePriceText = salePriceText.replaceAll("[a-z A-Z $ ,]", "");
-		unitPriceText = unitPriceText.replaceAll("[a-z A-Z $ ,]", "");  
+		unitPriceText = unitPriceText.replaceAll("[a-z A-Z $ ,]", ""); 
 
 		Currency currency = currencyChecker.checkCurrency(currencyText);
 		
 		//turn string into double
-		Double salePrice = Double.parseDouble(salePriceText);
-		Double unitPrice = Double.parseDouble(unitPriceText);
+		
+		Double salePrice;
+		Double unitPrice;
+		
+		if (salePriceText.equals("")) {
+			salePrice = Double.parseDouble(unitPriceText);
+		}else {
+			salePrice = Double.parseDouble(salePriceText);
+		}
+		
+			unitPrice = Double.parseDouble(unitPriceText);
 
 		//create and return new product object
 		return new PriceHistory(product, website, dateFormat.format(date), timeFormat.format(date), salePrice, unitPrice, scrapedUrl, currency);
