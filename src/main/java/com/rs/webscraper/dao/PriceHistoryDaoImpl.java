@@ -71,6 +71,5 @@ public class PriceHistoryDaoImpl implements PriceHistoryDao {
 		//return the current price histories
 		return currentPrices;
 	}
-
 	
 }

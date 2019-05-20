@@ -36,8 +36,6 @@ public class ProductDaoImpl implements ProductDao{
 		return theProducts;
 	}
 
-
-
 	@Override
 	public Product getProduct(int id) {
 		
@@ -66,7 +64,6 @@ public class ProductDaoImpl implements ProductDao{
 		//return products
 		return theProducts;
 	}
-
 
 	@Override
 	public List<Product> getCategoryProducts(String category) {
@@ -106,7 +103,4 @@ public class ProductDaoImpl implements ProductDao{
 		return theProducts;
 	}
 
-
-	
-	
 }

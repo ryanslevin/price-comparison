@@ -9,8 +9,6 @@ public interface ProductDao {
 	
 	public List<Product> getProducts();
 	
-
-
 	public Product getProduct(int id);
 
 	public List<Product> getBrandProducts(String brand);

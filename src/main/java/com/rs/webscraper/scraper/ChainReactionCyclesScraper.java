@@ -25,7 +25,7 @@ public class ChainReactionCyclesScraper {
 	@Autowired
 	CurrencyChecker currencyChecker;
 
-	public PriceHistory scrape(Product product, Website website) {
+	public PriceHistory scrape(Product product, Website website, Currency currency) {
 		
 		Date date = new Date();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -36,7 +36,8 @@ public class ChainReactionCyclesScraper {
 		String scrapedUrl = product.getChainReactionCyclesComUrl();
 			
 		//get doc from link
-		Document doc = Jsoup.connect(scrapedUrl).get();
+		Document doc = Jsoup.connect(scrapedUrl).cookie
+				("currencyCode", currency.getCode()).cookie("countryCode", currency.getCountryCode()).get();
 		
 		//pull elements with the tag script from doc
 		Elements elements = doc.getElementsByTag("script"); 
@@ -54,7 +55,6 @@ public class ChainReactionCyclesScraper {
 				break;
 			}
 		}
-		System.out.println("crc"+docData);
 		
 		//Create new JsonObject to parse json data
 		JsonObject jsonObject = new JsonParser().parse(docData).getAsJsonObject();
@@ -67,11 +67,10 @@ public class ChainReactionCyclesScraper {
 		String salePriceText = productJson.get("price").getAsString();
 		String unitPriceText = productJson.get("unit_price").getAsString();
 		
-		System.out.println("SalePrice: "+salePriceText+"\nUnitPrice: "+unitPriceText);
 		String currencyText = userJson.get("currency").getAsString();
 		
 		//Check currency code against codes in db and return appropriate currency
-		Currency currency = currencyChecker.checkCurrency(currencyText);
+		Currency currencyScraped = currencyChecker.checkCurrency(currencyText);
 		
 		//Remove dash and second price if salePriceText has a price range
 		salePriceText = salePriceText.replaceAll("-.*$", "");

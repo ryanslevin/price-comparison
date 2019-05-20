@@ -21,6 +21,9 @@ public class Currency {
 	
 	@Column(name="name")
 	private String name;
+	
+	@Column(name="country_code")
+	private String countryCode;
 
 	public int getId() {
 		return id;
@@ -45,23 +48,26 @@ public class Currency {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	@Override
-	public String toString() {
-		return "Currency [id=" + id + ", code=" + code + ", name=" + name + "]";
-	}
 	
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+
 	public Currency() {
 		
 	}
 
-	public Currency(int id, String code, String name) {
+	public Currency(String code, String name, String countryCode) {
 		super();
-		this.id = id;
 		this.code = code;
 		this.name = name;
+		this.countryCode = countryCode;
 	}
-	
+
 	public boolean checkCode(String currencyCode) {
 		if (this.code.equals(currencyCode)) {
 			return true;
