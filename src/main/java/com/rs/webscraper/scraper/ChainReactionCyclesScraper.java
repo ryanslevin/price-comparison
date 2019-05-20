@@ -18,12 +18,16 @@ import com.rs.webscraper.entity.PriceHistory;
 import com.rs.webscraper.entity.Product;
 import com.rs.webscraper.entity.Website;
 import com.rs.webscraper.util.CurrencyChecker;
+import com.rs.webscraper.util.PriceCleaner;
 
 @Component
 public class ChainReactionCyclesScraper {
 	
 	@Autowired
 	CurrencyChecker currencyChecker;
+	
+	@Autowired
+	PriceCleaner priceCleaner;
 
 	public PriceHistory scrape(Product product, Website website, Currency currency) {
 		
@@ -67,35 +71,21 @@ public class ChainReactionCyclesScraper {
 		String salePriceText = productJson.get("price").getAsString();
 		String unitPriceText = productJson.get("unit_price").getAsString();
 		
-		String currencyText = userJson.get("currency").getAsString();
+		//Pass scraped price text into helper method, returns a cleaned double
+		Double salePrice = priceCleaner.convert(salePriceText);
+		Double unitPrice = priceCleaner.convert(unitPriceText);
 		
-		//Check currency code against codes in db and return appropriate currency
-		Currency currencyScraped = currencyChecker.checkCurrency(currencyText);
+		//Assigning null value to usedPrice as invalid for CRC.
+		Double usedPrice = null;
 		
-		//Remove dash and second price if salePriceText has a price range
-		salePriceText = salePriceText.replaceAll("-.*$", "");
 		
-		//Turn string price data into double
-		//turn string into double
-		Double salePrice;
-		Double unitPrice;
-		
-		if (salePriceText.equals("")) {
-			salePrice = Double.parseDouble(unitPriceText);
-		}else {
-			salePrice = Double.parseDouble(salePriceText);
-		}
-		
-		unitPrice = Double.parseDouble(unitPriceText);
-		
-		return new PriceHistory(product, website, dateFormat.format(date), timeFormat.format(date), salePrice, unitPrice, scrapedUrl, currency);
+		return new PriceHistory(product, website, dateFormat.format(date), timeFormat.format(date),
+				salePrice, unitPrice, usedPrice, scrapedUrl, currency);
 		
 		}catch (Exception exc){
 			exc.printStackTrace();
 			return null;
 		}
-		
-		
 		
 	}
 

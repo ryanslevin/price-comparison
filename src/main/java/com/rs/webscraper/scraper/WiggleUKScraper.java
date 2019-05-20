@@ -18,12 +18,16 @@ import com.rs.webscraper.entity.PriceHistory;
 import com.rs.webscraper.entity.Product;
 import com.rs.webscraper.entity.Website;
 import com.rs.webscraper.util.CurrencyChecker;
+import com.rs.webscraper.util.PriceCleaner;
 
 @Component
 public class WiggleUKScraper {
 	
 	@Autowired
 	CurrencyChecker currencyChecker;
+	
+	@Autowired
+	PriceCleaner priceCleaner;
 	
 	public PriceHistory scrape(Product product, Website website, Currency currency) {
 		
@@ -66,29 +70,16 @@ public class WiggleUKScraper {
 		//Get currency code from the doc. Can this be changed to use JSON data? Which is faster JSON or Jsoup?
 		String currencyText = doc.getElementsByClass("bem-header__language-selector").attr("data-current-currency");
 
-		//Remove dash and second price if salePriceText has a price range
-		salePriceText = salePriceText.replaceAll("-.*$", "");
-		unitPriceText = unitPriceText.replaceAll("-.*$", "");
+		//Pass scraped price text into helper method, returns a cleaned double
+		Double salePrice = priceCleaner.convert(salePriceText);
+		Double unitPrice = priceCleaner.convert(unitPriceText);
 		
-		//remove nondigits from string, leaves decimal in place
-		salePriceText = salePriceText.replaceAll("[a-z A-Z $ ,]", "");
-		unitPriceText = unitPriceText.replaceAll("[a-z A-Z $ ,]", ""); 
-		
-		//turn string into double
-		
-		Double salePrice;
-		Double unitPrice;
-		
-		if (salePriceText.equals("")) {
-			salePrice = Double.parseDouble(unitPriceText);
-		}else {
-			salePrice = Double.parseDouble(salePriceText);
-		}
-		
-			unitPrice = Double.parseDouble(unitPriceText);
+		//Assigning null value to usedPrice as invalid for Wiggle
+		Double usedPrice = null;
 
 		//create and return new product object
-		return new PriceHistory(product, website, dateFormat.format(date), timeFormat.format(date), salePrice, unitPrice, scrapedUrl, currency);
+		return new PriceHistory(product, website, dateFormat.format(date), 
+				timeFormat.format(date), salePrice, unitPrice, usedPrice, scrapedUrl, currency);
 
 		}catch (Exception e) {
 			e.printStackTrace();
