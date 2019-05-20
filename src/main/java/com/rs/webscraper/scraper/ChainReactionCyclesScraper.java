@@ -18,6 +18,7 @@ import com.rs.webscraper.entity.PriceHistory;
 import com.rs.webscraper.entity.Product;
 import com.rs.webscraper.entity.Website;
 import com.rs.webscraper.util.CurrencyChecker;
+import com.rs.webscraper.util.CurrentDateTime;
 import com.rs.webscraper.util.PriceCleaner;
 
 @Component
@@ -28,12 +29,11 @@ public class ChainReactionCyclesScraper {
 	
 	@Autowired
 	PriceCleaner priceCleaner;
+	
+	@Autowired
+	CurrentDateTime currentDateTime;
 
 	public PriceHistory scrape(Product product, Website website, Currency currency) {
-		
-		Date date = new Date();
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");	
 		
 		try {
 		
@@ -79,7 +79,7 @@ public class ChainReactionCyclesScraper {
 		Double usedPrice = null;
 		
 		
-		return new PriceHistory(product, website, dateFormat.format(date), timeFormat.format(date),
+		return new PriceHistory(product, website, currentDateTime.getDate(), currentDateTime.getTime(),
 				salePrice, unitPrice, usedPrice, scrapedUrl, currency);
 		
 		}catch (Exception exc){

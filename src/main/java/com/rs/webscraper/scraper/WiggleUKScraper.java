@@ -1,9 +1,5 @@
 package com.rs.webscraper.scraper;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,6 +14,7 @@ import com.rs.webscraper.entity.PriceHistory;
 import com.rs.webscraper.entity.Product;
 import com.rs.webscraper.entity.Website;
 import com.rs.webscraper.util.CurrencyChecker;
+import com.rs.webscraper.util.CurrentDateTime;
 import com.rs.webscraper.util.PriceCleaner;
 
 @Component
@@ -29,12 +26,11 @@ public class WiggleUKScraper {
 	@Autowired
 	PriceCleaner priceCleaner;
 	
+	@Autowired
+	CurrentDateTime currentDateTime;
+	
 	public PriceHistory scrape(Product product, Website website, Currency currency) {
 		
-		//create formatters for date and time fields
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-		Date date = new Date();
 		
 		try {
 			
@@ -78,8 +74,8 @@ public class WiggleUKScraper {
 		Double usedPrice = null;
 
 		//create and return new product object
-		return new PriceHistory(product, website, dateFormat.format(date), 
-				timeFormat.format(date), salePrice, unitPrice, usedPrice, scrapedUrl, currency);
+		return new PriceHistory(product, website, currentDateTime.getDate(), 
+				currentDateTime.getTime(), salePrice, unitPrice, usedPrice, scrapedUrl, currency);
 
 		}catch (Exception e) {
 			e.printStackTrace();
