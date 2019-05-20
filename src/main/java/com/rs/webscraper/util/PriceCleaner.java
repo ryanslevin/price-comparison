@@ -1,5 +1,8 @@
 package com.rs.webscraper.util;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class PriceCleaner {
 
 	
