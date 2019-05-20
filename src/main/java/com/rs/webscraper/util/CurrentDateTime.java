@@ -4,6 +4,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class CurrentDateTime {
 	
 	private DateFormat dateFormat;
@@ -15,6 +18,8 @@ public class CurrentDateTime {
 		//create formatters for date and time fields
 		this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		this.timeFormat = new SimpleDateFormat("HH:mm:ss");
+		
+		//get current date object
 		this.date = new Date();
 		
 	}

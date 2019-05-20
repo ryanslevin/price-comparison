@@ -71,7 +71,7 @@ public class WiggleUKScraper {
 		Double unitPrice = priceCleaner.convert(unitPriceText);
 		
 		//Assigning null value to usedPrice as invalid for Wiggle
-		Double usedPrice = null;
+		Double usedPrice = 0.00;
 
 		//create and return new product object
 		return new PriceHistory(product, website, currentDateTime.getDate(), 
