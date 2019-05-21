@@ -3,8 +3,10 @@ package com.rs.webscraper.scraper;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.jsoup.Jsoup;
+import org.jsoup.Connection.Method;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -36,13 +38,21 @@ public class ChainReactionCyclesScraper {
 	public PriceHistory scrape(Product product, Website website, Currency currency) {
 
 		try {
+			
+			//Create hashmap with the cookies required to get correct Country/Currency response from CRC
+			HashMap<String,String> cookieMap = new HashMap<String,String>();
+			cookieMap.put("__cfduid", "");
+			cookieMap.put("JSESSIONID", "");
+			cookieMap.put("languageCode", "en");	
+			cookieMap.put("currencyCode", currency.getCode());
+			cookieMap.put("countryCode", currency.getCountryCode());
+			cookieMap.put("CRCRecentlyViewProductsCookie", "");	
 
 			// get url from product
 			String scrapedUrl = product.getChainReactionCyclesComUrl();
 
 			// get doc from link
-			Document doc = Jsoup.connect(scrapedUrl).cookie("currencyCode", currency.getCode())
-					.cookie("countryCode", currency.getCountryCode()).get();
+			Document doc = Jsoup.connect(scrapedUrl).method(Method.GET).cookies(cookieMap).get();
 
 			// pull elements with the tag script from doc
 			Elements elements = doc.getElementsByTag("script");

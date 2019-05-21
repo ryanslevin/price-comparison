@@ -26,7 +26,7 @@ public class CurrencyChecker {
 			}
 		}
 		
-		//If no matcing code found return null and print to console
+		//If no matching code found return null and print to console
 		System.out.println("No currency code matches: "+currencyCode);
 		return null;
 	}
