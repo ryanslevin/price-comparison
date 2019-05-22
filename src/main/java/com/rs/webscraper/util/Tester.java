@@ -24,9 +24,6 @@ public class Tester {
 		// get doc from link
 		System.out.println(Jsoup.connect(scrapedUrl).method(Method.GET).cookies(cookieMap).get());
 		
-		// get doc from link
-
-		System.out.println(Jsoup.connect(scrapedUrl).method(Method.GET).execute().cookies());
 
 	}
 

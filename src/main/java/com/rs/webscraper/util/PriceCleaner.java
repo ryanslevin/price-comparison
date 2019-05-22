@@ -2,6 +2,17 @@ package com.rs.webscraper.util;
 
 import org.springframework.stereotype.Component;
 
+/*
+ * 
+ * TODO Split convert() method into to parts. One to clean the string data
+ * the second to parse the string and return a double. This will follow
+ * SRP and allow for proper unit testing.
+ * 
+ * 
+ */
+
+
+
 @Component
 public class PriceCleaner {
 
